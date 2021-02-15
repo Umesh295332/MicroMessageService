@@ -1,8 +1,10 @@
-package com.messageservice.demo.profile.model;
+package com.messageservice.demo.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.Date;
+
+import java.time.LocalDateTime;
+
 
 @Entity
 public class Profile {
@@ -11,16 +13,16 @@ public class Profile {
     private long id;
     private String firstName;
     private String lastName;
-    private Date created;
+    private LocalDateTime created;
 
     public Profile() {
     }
 
-    public Profile(long id, String firstName, String lastName, Date created) {
+    public Profile(long id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.created = created;
+        this.created = LocalDateTime.now();
     }
 
     public long getId() {
@@ -47,11 +49,11 @@ public class Profile {
         this.lastName = lastName;
     }
 
-    public Date getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 

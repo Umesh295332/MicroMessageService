@@ -1,6 +1,6 @@
-package com.messageservice.demo.profile.repository;
+package com.messageservice.demo.repository;
 
-import com.messageservice.demo.profile.model.Profile;
+import com.messageservice.demo.model.Profile;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
