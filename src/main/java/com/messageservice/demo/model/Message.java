@@ -18,10 +18,10 @@ public class Message {
     public Message() {
     }
 
-    public Message(long id, String description, LocalDateTime created, long profileId) {
+    public Message(long id, String description, long profileId) {
         this.id = id;
         this.description = description;
-        this.created = created;
+        this.created = LocalDateTime.now();
         this.profile = new Profile(profileId,"","");
     }
 

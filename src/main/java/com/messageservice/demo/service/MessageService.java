@@ -22,16 +22,13 @@ public class MessageService implements MessageServiceInt {
     }
 
     public List<Message> getMessages(long profileId) {
-        List<Message> messages = new ArrayList<>();
-        messageRepository.findByProfileId(profileId).
-                forEach(messages::add);
-        return messages;
+        return new ArrayList<>(messageRepository.findByProfileId(profileId));
     }
 
-    public void addMessage(Message p) throws ResourceNotFoundException {
-        if (p == null)
+    public void addMessage(Message msg) throws ResourceNotFoundException {
+        if (msg == null)
             throw new ResourceNotFoundException("Please provide the valid message resource");
-        messageRepository.save(p);
+        messageRepository.save(msg);
     }
 
     public Message getMessage(long id) throws ResourceNotFoundException {
@@ -60,4 +57,11 @@ public class MessageService implements MessageServiceInt {
             throw new ResourceNotFoundException("Please provide the valid message Id");
         messageRepository.deleteById(id);
     }
+
+    public boolean isMessageMatchesProfile(long msgId, long profileId) {
+       List<Message> msgLst = getMessages(profileId);
+       System.out.println("msgLst size"+msgLst.size());
+        return msgLst.stream().anyMatch(msg -> msg.getId() == msgId);
+    }
+
 }

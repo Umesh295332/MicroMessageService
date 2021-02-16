@@ -38,13 +38,17 @@ public class MessageController {
 
     @RequestMapping("profiles/{profileId}/messages/{id}")
     @ResponseStatus(value = HttpStatus.OK)
-    public Message getMessage(@PathVariable Long id) throws ResourceNotFoundException {
+    public Message getMessage(@PathVariable Long id, @PathVariable Long profileId) throws ResourceNotFoundException, ResourceMismatchException {
+       if(! messageService.isMessageMatchesProfile(id, profileId))
+           throw new ResourceMismatchException("Profile and Message mismatch");
         return messageService.getMessage(id);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "profiles/{profileId}/messages/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public void updateMessage(@RequestBody Message message, @PathVariable Long id, @PathVariable Long profileId) throws ResourceMismatchException, ResourceNotFoundException {
+        if(! messageService.isMessageMatchesProfile(id, profileId))
+            throw new ResourceMismatchException("Profile and Message mismatch");
         message.setCreated(LocalDateTime.now());
         message.setProfile(new Profile(profileId, "", ""));
         messageService.updateMessage(message, id);
@@ -52,7 +56,9 @@ public class MessageController {
 
     @RequestMapping(method = RequestMethod.DELETE, value = "profiles/{profileId}/messages/{id}")
     @ResponseStatus(value = HttpStatus.OK)
-    public void deleteMessage(@PathVariable Long id) throws ResourceNotFoundException {
+    public void deleteMessage(@PathVariable Long id, @PathVariable Long profileId) throws ResourceNotFoundException, ResourceMismatchException {
+        if(! messageService.isMessageMatchesProfile(id, profileId))
+            throw new ResourceMismatchException("Profile and Message mismatch");
         messageService.deleteMessage(id);
     }
 

@@ -44,7 +44,7 @@ public class ProfileController {
     @RequestMapping(method= RequestMethod.PUT, value="/profiles/{id}")
     @ResponseStatus(value= HttpStatus.OK)
     public void updateProfile(@RequestBody Profile profile, @PathVariable Long id) throws ResourceMismatchException, ResourceNotFoundException {
-        profile.setCreated(LocalDateTime.now());
+         profile.setCreated(LocalDateTime.now());
          profileService.updateProfile(profile, id);
     }
 

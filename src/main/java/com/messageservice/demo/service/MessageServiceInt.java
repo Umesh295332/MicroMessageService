@@ -3,20 +3,21 @@ package com.messageservice.demo.service;
 import com.messageservice.demo.exception.ResourceMismatchException;
 import com.messageservice.demo.exception.ResourceNotFoundException;
 import com.messageservice.demo.model.Message;
-import com.messageservice.demo.model.Profile;
 
 import java.util.List;
 
 public interface MessageServiceInt {
 
-    public List<Message> getMessages(long profileId) ;
+    List<Message> getMessages(long profileId) ;
 
-    public void addMessage(Message p) throws ResourceNotFoundException;
+    void addMessage(Message msg) throws ResourceNotFoundException;
 
-    public Message getMessage(long id) throws ResourceNotFoundException ;
+    Message getMessage(long id) throws ResourceNotFoundException ;
 
-    public void updateMessage(Message p, Long id) throws ResourceMismatchException, ResourceNotFoundException;
+    void updateMessage(Message msg, Long id) throws ResourceMismatchException, ResourceNotFoundException;
 
-    public void deleteMessage (Long id) throws ResourceNotFoundException ;
+    void deleteMessage(Long id) throws ResourceNotFoundException ;
+
+    boolean isMessageMatchesProfile(long msgId, long profileId);
 
 }
