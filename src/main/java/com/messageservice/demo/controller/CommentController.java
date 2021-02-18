@@ -34,7 +34,9 @@ public class CommentController {
 
     @RequestMapping(method = RequestMethod.POST, value = "profiles/{profileId}/messages/{msgId}/comments")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public void addComment(@RequestBody Comment comment, @PathVariable long profileId, @PathVariable long msgId) throws ResourceNotFoundException {
+    public void addComment(@RequestBody Comment comment, @PathVariable long profileId, @PathVariable long msgId) throws ResourceNotFoundException, ResourceMismatchException {
+        if(! messageService.isMessageMatchesProfile(msgId, profileId))
+            throw new ResourceMismatchException("Profile and Message mismatch");
         comment.setCreated(LocalDateTime.now());
         comment.setMessage(new Message(msgId, "", profileId));
         comment.setProfile(new Profile(comment.getCommentedByProfileId(), "", ""));
